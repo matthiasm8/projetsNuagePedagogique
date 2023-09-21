@@ -78,6 +78,9 @@ function nbErreurs(){
 	}
 }
 
+/*
+ * Fonction qui retire les espaces et caractères spéciaux du texte reçu en paramètre.
+*/
 
 function input_data($data){
   $data = trim($data);
@@ -87,7 +90,9 @@ function input_data($data){
 
 }
 
-
+/*
+ * Fonction qui génère un code à 6 chiffres. 
+*/
     
     function generateCode(){
           // Generate a 6 digits hexadecimal number

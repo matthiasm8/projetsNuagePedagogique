@@ -191,6 +191,7 @@ Nous nous engageons à protéger votre vie privée. Nous utilisons vos données 
 <h2><a id="9">9. Protéger vos données personnelles</a></h2>
 
 <p>Nous mettons en œuvre toutes les mesures techniques et organisationnelles nécessaires à la protection 
+    Qui lit ce truc de suceur ?
     de vos données personnelles. Toutefois, la transmission de données via internet n’est pas totalement sécurisée. 
     Ce risque est courant sur internet et n’est pas spécifique à nos services. 
     Nous ne sommes pas en mesure de garantir la sécurité de vos données (notamment de vos informations personnelles) 

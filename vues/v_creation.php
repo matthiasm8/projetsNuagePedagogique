@@ -36,7 +36,15 @@
                                                             <input name="prénom" class="form-control" type="text" placeholder="prénom"/>
                                                             <input name="nom" class="form-control" type="text" placeholder="nom"/>
 								<br>
-                                                            <input type="submit" class="btn btn-primary signup" value="Créer"/>
+                <div class="form-check">
+                  <input type='hidden' value='0' name='checkbox'>
+                  <input class="form-check-input"type='checkbox' value='1' id="flexCheckDefault" name="checkbox" required>
+                    <label class="form-check-label" for="flexCheckDefault" >
+                    J'atteste avoir lu et accepte notre <a href="vues/v_politiqueprotectiondonnees.html" target="_blank">politique de protection des données</a>
+                    </label>
+                </div>
+                </br>
+                  <input type="submit" class="btn btn-primary signup" value="Créer"/>
 							</form>
 							</br>
 						

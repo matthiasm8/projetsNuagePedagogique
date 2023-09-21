@@ -33,6 +33,7 @@ switch($uc){
         
 	
 	}
+require_once ("vues/v_footer.php");
 	
 
 

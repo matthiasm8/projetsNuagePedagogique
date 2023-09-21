@@ -13,9 +13,11 @@ switch($action){
 	}
 	case 'valideCreation':{
 		
-           
+
+
 		$leLogin = htmlspecialchars($_POST['login']);
-                $lePassword = htmlspecialchars($_POST['mdp']);
+        $lePassword = htmlspecialchars($_POST['mdp']);
+        $checkOk = htmlspecialchars($_POST['checkbox']);
         
         
         if ($leLogin == $_POST['login'])
@@ -33,7 +35,8 @@ switch($action){
         $rempli=false;
         if ($loginOk && $passwordOk){
         //obliger l'utilisateur à saisir login/mdp
-        $rempli=true; 
+        $rempli=true;
+        //if (testMail) 
         if (empty($leLogin)==true) {
             echo 'Le login n\'a pas été saisi<br/>';
             $rempli=false;
@@ -41,6 +44,10 @@ switch($action){
         if (empty($lePassword)==true){
             echo 'Le mot de passe n\'a pas été saisi<br/>';
             $rempli=false; 
+        }
+        if ($checkOk!=1) {
+            echo 'Vous n\'avez pas accepté notre politique de protection des données <br/>';
+            $rempli=false;
         }
         
         
@@ -61,6 +68,16 @@ switch($action){
                 $loginOk=false;
                 
             }
+
+            //vérification doublon login bdd
+
+            $verifMail = $pdo->testMail($leLogin);
+            if ($verifMail==true){
+                echo 'Un compte avec cette adresse mail existe déjà !';
+                $loginOk=false;
+            }        
+        
+            
             
             //vérification du format du login
            if (!filter_var($leLogin, FILTER_VALIDATE_EMAIL)) {
@@ -74,13 +91,13 @@ switch($action){
                 echo 'Le mot de passe doit contenir au moins 12 caractères, une majuscule,'
                 . ' une minuscule et un caractère spécial<br/>';
                 $passwordOk=false;
-            }
-            
+            }            
             
                  
         }
         }
         if($rempli && $loginOk && $passwordOk){
+                $lePassword = password_hash($lePassword, PASSWORD_DEFAULT);
                 echo 'tout est ok, nous allons pouvoir créer votre compte...<br/>';
                 $executionOK = $pdo->creeMedecin($leLogin,$lePassword);       
                

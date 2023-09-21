@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * Classe d'accÃ¨s aux donnÃ©es. 
+ * Classe d'accès aux données. 
  
  * Utilise les services de la classe PDO
  * pour l'application GSB
@@ -17,16 +17,16 @@
  */
 
 class PdoGsb{   		
-      	private static $serveur='mysql:host=localhost:3308';
-      	private static $bdd='dbname=gsbExtranet';   		
-      	private static $user='root' ;    		
-      	private static $mdp='' ;	
+      	private static $serveur='mysql:host=localhost';
+      	private static $bdd='dbname=gsbextranet';   		
+      	private static $user='gsbextranet' ;    		
+      	private static $mdp='Cazorla2327!' ;	
 	private static $monPdo;
 	private static $monPdoGsb=null;
 		
 /**
- * Constructeur privÃ©, crÃ©e l'instance de PDO qui sera sollicitÃ©e
- * pour toutes les mÃ©thodes de la classe
+ * Constructeur privé, crée l'instance de PDO qui sera sollicitée
+ * pour toutes les méthodes de la classe
  */				
 	private function __construct(){
           
@@ -37,7 +37,7 @@ class PdoGsb{
 		PdoGsb::$monPdo = null;
 	}
 /**
- * Fonction statique qui crÃ©e l'unique instance de la classe
+ * Fonction statique qui crée l'unique instance de la classe
  
  * Appel : $instancePdoGsb = PdoGsb::getPdoGsb();
  
@@ -50,7 +50,7 @@ class PdoGsb{
 		return PdoGsb::$monPdoGsb;  
 	}
 /**
- * vÃ©rifie si le login et le mot de passe sont corrects
+ * vérifie si le login et le mot de passe sont corrects
  * renvoie true si les 2 sont corrects
  * @param type $lePDO
  * @param type $login
@@ -58,6 +58,11 @@ class PdoGsb{
  * @return bool
  * @throws Exception
  */
+
+/*
+ * Fonction qui vérifie que le mot de passe entré lors de la connexion.
+*/
+
 function checkUser($login,$pwd):bool {
     //AJOUTER TEST SUR TOKEN POUR ACTIVATION DU COMPTE
     $user=false;
@@ -67,7 +72,7 @@ function checkUser($login,$pwd):bool {
     if ($monObjPdoStatement->execute()) {
         $unUser=$monObjPdoStatement->fetch();
         if (is_array($unUser)){
-           if ($pwd==$unUser['motDePasse'])
+           if (password_verify($pwd, $unUser['motDePasse']))
                 $user=true;
         }
     }
@@ -77,7 +82,9 @@ return $user;
 }
 
 
-	
+/*
+ * Fonction qui donne des informations sur le médecin en fonction du mail reçu en paramètre
+*/	
 
 function donneLeMedecinByMail($login) {
     
@@ -93,6 +100,9 @@ function donneLeMedecinByMail($login) {
 return $unUser;   
 }
 
+/*
+ * Fonction qui vérifie que la taille du mail a inscrire dans la base n'est pas trop longue.
+*/
 
 public function tailleChampsMail(){
     
@@ -110,6 +120,10 @@ $leResultat = $pdoStatement->fetch();
 }
 
 
+/*
+ * Fonction qui insère des valeurs dans la table medecin une fois la création du compte validée.
+*/
+
 public function creeMedecin($email, $mdp)
 {
    
@@ -123,6 +137,9 @@ public function creeMedecin($email, $mdp)
     
 }
 
+/*
+ * Fonction qui vérifie si le mail entré par l'utilisateur lors de la création de compte n'est pas déjà présent dans la base.
+*/
 
 function testMail($email){
     $pdo = PdoGsb::$monPdo;
@@ -140,7 +157,6 @@ function testMail($email){
 
 
 
-
 function connexionInitiale($mail){
      $pdo = PdoGsb::$monPdo;
     $medecin= $this->donneLeMedecinByMail($mail);
@@ -148,6 +164,10 @@ function connexionInitiale($mail){
     $this->ajouteConnexionInitiale($id);
     
 }
+
+/*
+ * Fonction qui met à jour les logs de connexion du médecin après qu'il se soit connecté.
+*/
 
 function ajouteConnexionInitiale($id){
     $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO historiqueconnexion "
@@ -157,6 +177,11 @@ function ajouteConnexionInitiale($id){
     return $execution;
     
 }
+
+/*
+ * Fonction qui donne des informations sur un médecin en fonction de l'id reçu en paramètre
+*/
+
 function donneinfosmedecin($id){
   
        $pdo = PdoGsb::$monPdo;
