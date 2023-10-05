@@ -19,6 +19,9 @@ else {
     if($_GET['uc']=="connexion" && !estConnecte()){
         $_GET['uc'] = 'connexion';
     }
+	if($_GET['uc']=="validation" && !estConnecte()){
+        $_GET['uc'] = 'validation';
+    }
         
 }
 
@@ -29,6 +32,9 @@ switch($uc){
 	}
         case 'creation':{
 		include("controleurs/c_creation.php");break;
+	}
+	case 'droits':{
+		include("controleurs/c_droits.php");break;
 	}
         
 	

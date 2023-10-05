@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <title>GSB - extranet</title>
@@ -7,7 +7,7 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- styles -->
     <link href="css/styles.css" rel="stylesheet">
-
+    <?php echo "<script> alert('Email Envoyé') </script>";?>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -15,6 +15,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
+
   <body background="assets/img/laboratoire.jpg">
 
       <!-- **********************************************************************************************************************************************************
@@ -27,15 +28,14 @@
 			<div class="login-wrapper">
 				<div class="box">
 					<div class="content-wrap">
-						<legend>Se connecter</legend>
-							<form method="post" action="index.php?uc=connexion&action=valideConnexion">
-								<input name="login" class="form-control" type="text" placeholder="Login">
-								<input name="mdp" class="form-control" type="password" placeholder="Password">
+						<legend>Validation du compte</legend>
+							<form method="post" action="../index.php?uc=validation&action=validationCompte">
+								<input name="token" class="form-control" type="text" data-pattern="{6}" value="">
 								</br>
-								<input type="submit" class="btn btn-primary signup" value="Se connecter">
+								<input type="submit" class="btn btn-primary signup" value="Valider mon compte">
 							</form>
 							</br>
-						<a href="index.php?uc=creation&action=demandeCreation">je suis médecin, je souhaite créer un compte</a>
+						<a href="../index.php?uc=creation&action=demandeCreation">Je n'ai pas reçu mon code</a>
                                                 <br/>
                                                 
                                         </div>	

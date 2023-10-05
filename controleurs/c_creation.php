@@ -96,17 +96,24 @@ switch($action){
                  
         }
         }
+        
         if($rempli && $loginOk && $passwordOk){
                 $lePassword = password_hash($lePassword, PASSWORD_DEFAULT);
-                echo 'tout est ok, nous allons pouvoir créer votre compte...<br/>';
-                $executionOK = $pdo->creeMedecin($leLogin,$lePassword);       
+                $token=generateCode();
+                /* echo 'tout est ok, nous allons pouvoir créer votre compte...<br/>';*/
+                $executionOK = $pdo->creeMedecin($leLogin,$lePassword,$token);       
                
                 if ($executionOK==true){
-                    echo "c'est bon, votre compte a bien été créé ;-)";
+                    /* echo "c'est bon, votre compte a bien été créé ;-)";*/
                     $pdo->connexionInitiale($leLogin);
+                    
+                    $pdo->envoiMail($token);
+                    
                 }   
                 else
                      echo "ce login existe déjà, veuillez en choisir un autre";
+                
+                
             }
 
 			

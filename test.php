@@ -1,0 +1,1 @@
+<?php echo "<script> alert('Votre compte a bien été validé ! Vous pouvez vous connecter'); window.location.href=\"index.php\"; </script>";?>
