@@ -1,21 +1,4 @@
-﻿<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>GSB -extranet</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- styles -->
-    <link href="css/styles.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
+﻿
   <body background="assets/img/laboratoire.jpg">
 
       <!-- **********************************************************************************************************************************************************
@@ -35,6 +18,7 @@
 							    <input name="mdp" class="form-control" type="password" placeholder="password"/>
                                                             <input name="prénom" class="form-control" type="text" placeholder="prénom"/>
                                                             <input name="nom" class="form-control" type="text" placeholder="nom"/>
+                                                            <input type="checkbox" name="VerifCheckBox" value="1"><strong>J'atteste avoir lu et accepter notre</strong><a href="vues/v_politiqueprotectiondonnees.html"> politique de protection des données
 								<br>
                                                             <input type="submit" class="btn btn-primary signup" value="Créer"/>
 							</form>

@@ -1,14 +1,11 @@
-﻿
-<?php
+﻿<?php
+require_once("vues/entete.php");
 require_once("include/fct.inc.php");
 require_once ("include/class.pdogsb.inc.php");
+require_once("include/class.pdogsb.inc.php");
 session_start();
 
-
-
 date_default_timezone_set('Europe/Paris');
-
-
 
 $pdo = PdoGsb::getPdoGsb();
 $estConnecte = estConnecte();
@@ -30,12 +27,13 @@ switch($uc){
         case 'creation':{
 		include("controleurs/c_creation.php");break;
 	}
+	case 'footer':{
+		include("controleurs/v_footer.php");break;
+	}
         
 	
 	}
-	
-
-
+	require_once("vues/v_footer.php");
 ?>
 
 

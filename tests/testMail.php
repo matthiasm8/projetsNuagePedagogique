@@ -7,4 +7,4 @@ $lePdo = PdoGsb::getPdoGsb();
 
 var_dump($lePdo->testMail('toto@gmail.com')); //cas où mail existe
 
-var_dump($lePdo->testMail('t@gmail.com')); //cas où mail n'existe pas
+var_dump($lePdo->testMail('titi@gmail.com')); //cas où mail n'existe pas

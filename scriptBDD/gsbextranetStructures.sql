@@ -137,7 +137,7 @@ ALTER TABLE `historiqueconnexion`
 
 --
 -- Contraintes pour la table `medecinproduit`
---
+--yy
 ALTER TABLE `medecinproduit`
   ADD CONSTRAINT `medecinproduit_ibfk_1` FOREIGN KEY (`idMedecin`) REFERENCES `medecin` (`id`),
   ADD CONSTRAINT `medecinproduit_ibfk_2` FOREIGN KEY (`idProduit`) REFERENCES `produit` (`id`);
