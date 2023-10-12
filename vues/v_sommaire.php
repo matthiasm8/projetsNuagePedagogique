@@ -45,13 +45,15 @@ else {
       <ul class="nav navbar-nav">
         
         <li class="active"><a href="index.php?uc=etatFrais&action=selectionnerMois">M'inscrire à une visio</a></li> 
-        <li class="active"><a href="index.php?uc=droits&action=portabilite">Droit de portabilité</a></li> 
+        <li class="active"><a href="index.php?uc=droits&action=consulter">Droit de portabilité</a></li> 
        
          
       </ul>
       <ul class="nav navbar-nav navbar-right">
+      
 		  <li><a><?php echo $_SESSION['prenom']."  ".$_SESSION['nom']?></a></li>
 		  <li><a>Médecin</a></li>
+      <li><a href="index.php?uc=deconnexion&action=deconnexion">Se déconnecter</a></li>
        
      </ul>
     </div><!-- /.navbar-collapse -->

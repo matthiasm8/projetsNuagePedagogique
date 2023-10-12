@@ -27,11 +27,19 @@
                                     <div class="content-wrap">
 						<legend>je suis médecin, je souhaite créer un compte</legend>
 							<form method="post" action="index.php?uc=creation&action=valideCreation">
-                                                            <input name="login" class="form-control" type="email" placeholder="mail"/>
-							    <input name="mdp" class="form-control" type="password" placeholder="password"/>
-                                                            <input name="prénom" class="form-control" type="text" placeholder="prénom"/>
-                                                            <input name="nom" class="form-control" type="text" placeholder="nom"/>
-								<br>
+              <input name="login" class="form-control" type="email" placeholder="Adresse Mail"/>
+							                                              <br><input name="mdp" class="form-control" type="password" placeholder="Mot de Passe"/>
+                                                            
+                                                              <div class="col">
+                                                            <input name="prenom" class="form-control" type="text" placeholder="Prénom" required/>
+                                                            <input name="nom" class="form-control" type="text" placeholder="Nom" required/>
+                                                              </div>  
+                                                          
+                                                            <input name="telephone" class="form-control" type="int" placeholder="N° de téléphone" required/>
+                                                              <label for='datenaiss'>Date de Naissance :</label>
+                                                            <input name="datenaiss" class="form-control" type="date" placeholder="date de naissance" required/>
+                                                            <br><input name="rpps" class="form-control" type="int" placeholder="Numéro RPPS" maxlength="15" required/>
+                                                            <br><label for='datediplome'>Date d'obtention du diplôme :</label><input name="datediplome" class="form-control" type="date" placeholder="date diplôme" required/>    
                 <div class="form-check">
                   <input type='hidden' value='0' name='checkbox'>
                   <input class="form-check-input"type='checkbox' value='1' id="flexCheckDefault" name="checkbox" required>

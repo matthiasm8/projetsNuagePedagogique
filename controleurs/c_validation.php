@@ -4,16 +4,17 @@ if(!isset($_GET['action'])){
 	$_GET['action'] = 'validationCompte';
 }
 $action = $_GET['action'];
+$mail = $_GET['mail'];
 switch($action){
 	
-	case 'demandeCreation':{
-		include("vues/v_creation.php");
+	case 'demandeValidation':{
+		include("vues/v_validation.php");
 		break;
 	}
 	case 'validationCompte':{
-		
+	
     $token = htmlspecialchars($_POST['token']);
-    valideUser($token);
+    valideUser($token,$mail);
     }
 }
 

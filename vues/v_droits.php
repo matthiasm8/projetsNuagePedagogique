@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+<?php require_once ("vues/v_sommaire.php");?>
 <head>
     <title>GSB -extranet</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,7 @@
   <body background="assets/img/laboratoire.jpg">
 
 <div class="page-content container">
-  Vous pouvez télécharger vos données en cliquant <a href="ftp://<?php var_dump($pdo->creefichierjson($_SESSION['id']));?>">ici</a>
+  Vous pouvez télécharger vos données en cliquant <a href="portabilite/<?php echo $_SESSION['id']?>.json" download>ici</a>
 </div>
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

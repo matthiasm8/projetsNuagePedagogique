@@ -30,12 +30,22 @@ switch($uc){
 	case 'connexion':{
 		include("controleurs/c_connexion.php");break;
 	}
-        case 'creation':{
+    case 'creation':{
 		include("controleurs/c_creation.php");break;
+	}
+	case 'validation':{
+		include("controleurs/c_validation.php");break;
 	}
 	case 'droits':{
 		include("controleurs/c_droits.php");break;
 	}
+	case 'deconnexion':{
+		include("controleurs/c_deconnexion.php");break;
+	}
+	case 'code':{
+		include("controleurs/c_code.php");break;
+	}
+	
         
 	
 	}

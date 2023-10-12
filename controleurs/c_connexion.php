@@ -14,6 +14,7 @@ switch($action){
 	case 'valideConnexion':{
 		$login = $_POST['login'];
 		$mdp = $_POST['mdp'];
+
 		$connexionOk = $pdo->checkUser($login,$mdp);
 		if(!$connexionOk){
 			ajouterErreur("Login ou mot de passe incorrect");
@@ -21,15 +22,35 @@ switch($action){
 			include("vues/v_connexion.php");
 		}
 		else { 
-                        $infosMedecin = $pdo->donneLeMedecinByMail($login);
-			$id = $infosMedecin['id'];
-			$nom =  $infosMedecin['nom'];
-			$prenom = $infosMedecin['prenom'];
-			connecter($id,$nom,$prenom);
-			$pdo->ajouteConnexionInitiale($id);
-			
-                       
-			include("vues/v_sommaire.php");
+			$valideOk=$pdo->checkValide($login);
+			if (!$valideOk){
+				ajouterErreur("Votre compte n\'a pas encore été validé !");
+				include("vues/v_erreurs.php");
+				include("vues/v_connexion.php");
+			}
+			else{
+				$infosMedecin = $pdo->donneLeMedecinByMail($login);
+				$id = $infosMedecin['id'];
+				$nom =  $infosMedecin['nom'];
+				$prenom = $infosMedecin['prenom'];
+				$_SESSION['mail'] = $infosMedecin['mail'];
+
+				$token=generateCode();
+				$auth=tokenCo($token,$_SESSION['mail']);
+				if ($auth){
+					echo "<script> alert('Veuillez entrer votre token de connexion reçu par mail.');</script>";
+					
+				}
+				include("vues/v_code.php");
+
+				
+				// connecter($id,$nom,$prenom);
+				// $pdo->ajouteConnexionInitiale($id);
+				
+						   
+				// include("vues/v_sommaire.php");
+			}
+            
 			}
 
 			break;	

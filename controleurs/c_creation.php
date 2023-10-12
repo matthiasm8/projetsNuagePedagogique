@@ -18,7 +18,12 @@ switch($action){
 		$leLogin = htmlspecialchars($_POST['login']);
         $lePassword = htmlspecialchars($_POST['mdp']);
         $checkOk = htmlspecialchars($_POST['checkbox']);
-        
+        $telephone = ($_POST['telephone']);
+        $nom = htmlspecialchars($_POST['nom']);
+        $prenom = htmlspecialchars($_POST['prenom']);
+        $naiss = htmlspecialchars($_POST['datenaiss']);
+        $rpps = htmlspecialchars($_POST['rpps']);
+        $diplome = htmlspecialchars($_POST['datediplome']);
         
         if ($leLogin == $_POST['login'])
         {
@@ -101,13 +106,13 @@ switch($action){
                 $lePassword = password_hash($lePassword, PASSWORD_DEFAULT);
                 $token=generateCode();
                 /* echo 'tout est ok, nous allons pouvoir créer votre compte...<br/>';*/
-                $executionOK = $pdo->creeMedecin($leLogin,$lePassword,$token);       
+                $executionOK = $pdo->creeMedecin($leLogin, $lePassword, $prenom, $nom, $telephone, $naiss, $rpps, $diplome,$token);       
                
                 if ($executionOK==true){
                     /* echo "c'est bon, votre compte a bien été créé ;-)";*/
-                    $pdo->connexionInitiale($leLogin);
+                    // $pdo->connexionInitiale($leLogin);
                     
-                    $pdo->envoiMail($token);
+                    $pdo->envoiMail($token,$leLogin);
                     
                 }   
                 else
@@ -115,9 +120,7 @@ switch($action){
                 
                 
             }
-
-			
-        
+            
         break;	
 }
 	default :{

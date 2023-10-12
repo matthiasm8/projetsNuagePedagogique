@@ -1,4 +1,3 @@
-<?php $mail = $_GET['mail'];?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -29,11 +28,12 @@
 			<div class="login-wrapper">
 				<div class="box">
 					<div class="content-wrap">
-						<legend>Validation du compte</legend>
-							<form method="post" action="index.php?uc=validation&action=validationCompte&mail=<?php echo $mail?>">
+						<legend>Connexion au compte</legend>
+            Veuillez entrer le code reçu par mail.
+							<form method="post" action="index.php?uc=code&action=valideCode">
 								<input name="token" class="form-control" type="text" data-pattern="{6}" value="">
 								</br>
-								<input type="submit" class="btn btn-primary signup" value="Valider mon compte">
+								<input type="submit" class="btn btn-primary signup" value="Se connecter">
 							</form>
 							</br>
 						<a href="../index.php?uc=creation&action=demandeCreation">Je n'ai pas reçu mon code</a>
