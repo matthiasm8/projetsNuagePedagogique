@@ -14,7 +14,7 @@ switch($action){
 	case 'valideCode':{
 		$token = $_POST['token'];
 		$login =$_SESSION['mail'];
-		if(valideCode($token,$login)){
+		if($pdo->valideCode($token,$login)){
 				$infosMedecin = $pdo->donneLeMedecinByMail($login);
 				$id = $infosMedecin['id'];
 				$nom =  $infosMedecin['nom'];
@@ -24,6 +24,28 @@ switch($action){
 				
 						   
 				include("vues/v_sommaire.php");
+				switch($_SESSION['role']){
+					case 5:{
+						include("vues/v_medecin.php");
+						break;
+				    }  
+					case 4:{
+						include("vues/v_validateur.php");
+						break;
+					}  
+					case 3:{
+						include("vues/v_admin.php");
+						break;
+					}  
+					case 2:{
+						include("vues/v_cdp.php");
+						break;
+					}   
+					case 1:{
+						include("vues/v_moderateur.php");
+						break;
+					}            
+				}
 		}
     }
 }

@@ -10,5 +10,5 @@
   </head>
   
 <footer>
-    <a href="vues/v_politiqueprotectiondonnees.php" target="_blank">La protection de vos données personnelles</a>
+    <a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php?uc=droits&action=footer" target="_blank">La protection de vos données personnelles</a>
 </footer>

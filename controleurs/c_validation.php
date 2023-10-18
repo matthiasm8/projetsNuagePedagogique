@@ -4,7 +4,7 @@ if(!isset($_GET['action'])){
 	$_GET['action'] = 'validationCompte';
 }
 $action = $_GET['action'];
-$mail = $_GET['mail'];
+$email = $_GET['mail'];
 switch($action){
 	
 	case 'demandeValidation':{
@@ -13,8 +13,15 @@ switch($action){
 	}
 	case 'validationCompte':{
 	
-    $token = htmlspecialchars($_POST['token']);
-    valideUser($token,$mail);
+    $token = strip_tags($_POST['token']);
+    $pdo->valideUser($token,$email);
+	$infosMedecin = $pdo->donneLeMedecinByMail($email);
+				$id = $infosMedecin['id'];
+				$nom =  $infosMedecin['nom'];
+				$prenom = $infosMedecin['prenom'];
+				$role = $infosMedecin['id_role'];
+	$mail->envoiMailValidateur($prenom,$nom);
+	echo "<script>window.location.href=\"index.php\";</script>";
     }
 }
 

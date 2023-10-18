@@ -22,6 +22,11 @@ switch($action){
 		file_put_contents("/var/www/html/projet/gsbextranetB3/portabilite/".$lesdonnes['id'].".json", $donnesjson);
 		break;
     }
+
+    case 'footer':{
+        include("vues/v_sommaire.php");
+		include("vues/v_politiqueprotectiondonnees.php");
+    }
 }
 
 ?>

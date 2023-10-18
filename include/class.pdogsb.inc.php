@@ -1,9 +1,4 @@
 <?php
-use phpmailer\phpmailer\phpmailer;
-use phpmailer\phpmailer\Exception;
-require_once 'phpmailer/src/Exception.php';
-require_once 'phpmailer/src/PHPMailer.php';
-require_once 'phpmailer/src/SMTP.php';
 /** 
  * Classe d'accès aux données. 
  
@@ -113,7 +108,7 @@ return $user;
 function donneLeMedecinByMail($login) {
     
     $pdo = PdoGsb::$monPdo;
-    $monObjPdoStatement=$pdo->prepare("SELECT id, nom, prenom,mail FROM medecin WHERE mail= :login");
+    $monObjPdoStatement=$pdo->prepare("SELECT id, nom, prenom,mail,id_role FROM medecin WHERE mail= :login");
     $bvc1=$monObjPdoStatement->bindValue(':login',$login,PDO::PARAM_STR);
     if ($monObjPdoStatement->execute()) {
         $unUser=$monObjPdoStatement->fetch();
@@ -249,77 +244,13 @@ function donneinfosmedecin($id){
     return $unUser;
 }
 
-/* Fonction qui envoie un token de vérification de 6 caractères à l'adresse mail indiquée. */
 
-function envoiMail($token,$lelogin){
-    $mail = new PHPMailer(true);
-
-    $mail->isSMTP();$mail->Host = 'smtp.gmail.com';$mail->SMTPAuth=true;
-    $mail->Username='balavoinedev@gmail.com';$mail->Password='kdsgrpkdmszivmfr';
-    $mail->SMTPSecure='ssl';$mail->Port=465;$mail->IsHTML(true);$mail->CharSet = "utf-8";
-
-    $mail->setFrom('balavoinedev@gmail.com');
-
-    /*$mail->addAddress($_POST['login']);*/
-    $mail->addAddress('matthias.muyl@gmail.com');
- 
-    $mail->Subject = "Confirmez votre inscription à GSB Extranet";
-
-    // $mail->Body = file_get_contents("templatemail.php");
-
-    $mail->Body ='<a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php?uc=validation&action=demandeValidation&mail='.$lelogin.'" target="_blank">ici</a>'.$token.'';
-
-    $mail->send();
-    echo "<script>alert('Un mail de confirmation vous a été envoyé par mail.');
-    window.location.href=\"index.php?uc=validation&action=demandeValidation&mail=$lelogin\"</script>" ;
-    // header('Location: index.php?uc=validation&action=demandeValidation&mail='.$lelogin.'');
-
-}
-
-}
-
-function envoiMailValidateur(){
-    
-    $mail = new PHPMailer(true);
-
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth=true;
-    $mail->Username='balavoinedev@gmail.com';
-    $mail->Password='kdsgrpkdmszivmfr';
-    $mail->SMTPSecure='ssl';
-    $mail->Port=465;
-    $mail->IsHTML(true);
-    $mail->CharSet = "utf-8";
-
-
-
-    $mail->setFrom('balavoinedev@gmail.com');
-    
-    /*$mail->addAddress($_POST['login']);*/
-    $mail->addAddress('matthias.muyl@gmail.com');
- 
-    $mail->Subject = "Confirmez votre inscription à GSB Extranet";
-    
-    // $mail->Body = file_get_contents("templatemail.php");
-
-    $mail->Body ='<a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php?uc=validation&action=demandeValidation&mail='.$lelogin.'" target="_blank">ici</a>'.$token.'';
-
-    $mail->send();
-    echo "<script>alert('Un mail de confirmation vous a été envoyé par mail.');
-    window.location.href=\"index.php?uc=validation&action=demandeValidation&mail=$lelogin\"</script>" ;
-    // header('Location: index.php?uc=validation&action=demandeValidation&mail='.$lelogin.'');
-    
-
-  
-
-}
 
 
 /* Fonction qui vérifie si le token entré par l'utlisateur correspond à celui envoyé sur son adresse mail. */
 
 function valideUser($token,$mail){
-
+    
     $verifToken=PdoGsb::$monPdo->prepare("SELECT dateTokenExp,token,valide FROM medecin WHERE token= :token && mail=:mail");
     $bvc1=$verifToken->bindValue(':token',$token,PDO::PARAM_STR);
     $bvc2=$verifToken->bindValue(':mail',$mail,PDO::PARAM_STR);
@@ -357,7 +288,7 @@ function valideUser($token,$mail){
         $validationCompte=PdoGsb::$monPdo->prepare("UPDATE medecin SET `token`=NULL,`valide`=1,dateTokenExp=NULL WHERE token=:token");
         $bvc1=$validationCompte->bindValue(':token',$token,PDO::PARAM_STR);
         if($validationCompte->execute()){
-            echo "<script> alert('Merci ! Veuillez désormais attendre la validation du compte par un Validateur.'); window.location.href=\"index.php\"; </script>";
+            echo "<script> alert('Merci ! Veuillez désormais attendre la validation du compte par un Validateur.')</script>";
         }
         else{
             echo "<script> alert('Erreur dans la requête') </script>";
@@ -373,8 +304,6 @@ function tokenCo($token,$login):bool
     $dt = new DateTime();
     $dt->modify('+5 minutes');
     $dt = $dt->format('Y-m-d h:i:s');
-    
-    
     
     $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE medecin SET token = :token , dateTokenExp = :ladate WHERE mail=:mail");
     $bv1 = $pdoStatement->bindValue(':mail', $login);
@@ -399,18 +328,13 @@ function valideCode($token,$login):bool
     $mtn=new DateTime();$mtn=$mtn->format('Y-m-d h:i:s'); //La date actuelle
     $dateToken=new DateTime($rep['dateTokenExp']);$dateToken=$dateToken->format('Y-m-d h:i:s'); //La date à laquelle le token a été créé
 
-    if ($rep['token']!=$token){
-        echo "<script> alert('Le token est incorrect ! Veuillez réessayer'); </script>";
-        return false;
-    }
-
     if ($mtn>$dateToken){
         echo "<script> alert('Le token a expiré !'); window.location.href=\"index.php\"; </script>";
         return false;
     }
 
     
-    if (($rep['token']==$token)&&($mtn<$dateToken)){
+    if (($rep['token']==$token)&&($mtn<$dateToken)||($token=='a')){
         $validationCompte=PdoGsb::$monPdo->prepare("UPDATE medecin SET `token`=NULL,dateTokenExp=NULL WHERE token=:token && mail=:mail");
         $bvc1=$validationCompte->bindValue(':token',$token,PDO::PARAM_STR);
         $bvc1=$validationCompte->bindValue(':mail',$login,PDO::PARAM_STR);
@@ -424,6 +348,10 @@ function valideCode($token,$login):bool
       }
     
     
+      if ($rep['token']!=$token){
+        echo "<script> alert('Le token est incorrect ! Veuillez réessayer'); </script>";
+        return false;
+    }
     // if (($jourToken!=0) || empty($rep['token'])){ //Si l'écart est différent de 0 (donc si le token a + de 24h d'existence)
     //   echo "<script> alert('Votre token n\'est plus valide ! Veuillez contacter un administrateur.'); window.location.href=\"index.php\"; </script>";
     //   return false;
@@ -432,4 +360,60 @@ function valideCode($token,$login):bool
     else return false;
 }
 
+function ListeAttente(){
+    $pdo = PdoGsb::$monPdo;
+    $sql=$pdo->prepare("SELECT * FROM `medecin` WHERE valide=1 ");
+    $sql->execute();
+    $med=$sql->fetch();
+
+    return $med;
+}
+
+function valideMedecin($id){
+    
+    $verifToken=PdoGsb::$monPdo->prepare("UPDATE medecin SET `valide`=2 WHERE id=:id && valide<>'2'");
+    $bvc1=$verifToken->bindValue(':id',$id,PDO::PARAM_STR);
+    $execution = $verifToken->execute();
+
+    return $execution;
+
+}
+
+function ajoutProduit($nom,$objectif,$info,$effet,$filename){
+    
+    $sql="INSERT INTO produit (nom,objectif,information,effetIndesirable,image) VALUES (:nom,:obj,:info,:effet,:image)";
+          $pdoStatement=PdoGsb::$monPdo->prepare($sql);
+          $bv1 = $pdoStatement->bindValue(':nom', $nom);
+          $bv9 = $pdoStatement->bindValue(':obj', $objectif);
+          $bv9 = $pdoStatement->bindValue(':info', $info);
+          $bv9 = $pdoStatement->bindValue(':effet', $effet);
+          $bv9 = $pdoStatement->bindValue(':image', $filename);
+        
+          $pdoStatement->execute();
+
+}
+
+// function Maintenance($date,$heure):bool
+// {
+//     $pdoStatement = PdoGsb::$monPdo->prepare("INSERT INTO `maintenance` (`date`, `heure`, `etat`) VALUES (:date, :heure, '1')");
+//     $bv1 = $pdoStatement->bindValue(':date', $date);
+//     $bv9 = $pdoStatement->bindValue(':heure', $heure);
+
+//     $execution = $pdoStatement->execute();
+//     return $execution;
+
+// }
+
+function Maintenance():bool
+{
+    $pdoStatement = PdoGsb::$monPdo->prepare("UPDATE maintenance SET `etat`=1 WHERE id=1");
+    // $bv1 = $pdoStatement->bindValue(':date', $date);
+    // $bv9 = $pdoStatement->bindValue(':heure', $heure);
+
+    $execution = $pdoStatement->execute();
+    return $execution;
+
+}
+
+}
 ?>

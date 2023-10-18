@@ -15,15 +15,15 @@ switch($action){
 		
 
 
-		$leLogin = htmlspecialchars($_POST['login']);
-        $lePassword = htmlspecialchars($_POST['mdp']);
-        $checkOk = htmlspecialchars($_POST['checkbox']);
-        $telephone = ($_POST['telephone']);
-        $nom = htmlspecialchars($_POST['nom']);
-        $prenom = htmlspecialchars($_POST['prenom']);
-        $naiss = htmlspecialchars($_POST['datenaiss']);
-        $rpps = htmlspecialchars($_POST['rpps']);
-        $diplome = htmlspecialchars($_POST['datediplome']);
+		$leLogin = strip_tags($_POST['login']);
+        $lePassword = strip_tags($_POST['mdp']);
+        $checkOk = strip_tags($_POST['checkbox']);
+        $telephone = strip_tags($_POST['telephone']);
+        $nom = strip_tags($_POST['nom']);
+        $prenom = strip_tags($_POST['prenom']);
+        $naiss = strip_tags($_POST['datenaiss']);
+        $rpps = strip_tags($_POST['rpps']);
+        $diplome = strip_tags($_POST['datediplome']);
         
         if ($leLogin == $_POST['login'])
         {
@@ -112,7 +112,9 @@ switch($action){
                     /* echo "c'est bon, votre compte a bien été créé ;-)";*/
                     // $pdo->connexionInitiale($leLogin);
                     
-                    $pdo->envoiMail($token,$leLogin);
+                    $mail->envoiMail($token,$leLogin);
+                    echo "<script>alert('Un mail de confirmation vous a été envoyé par mail.');
+    window.location.href=\"index.php?uc=validation&action=demandeValidation&mail=$lelogin\"</script>" ;
                     
                 }   
                 else

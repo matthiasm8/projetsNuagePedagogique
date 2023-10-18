@@ -30,6 +30,7 @@
 				<div class="box">
 					<div class="content-wrap">
 						<legend>Validation du compte</legend>
+            Veuillez entrer le code envoyé à l'adresse <?php echo $mail?>.
 							<form method="post" action="index.php?uc=validation&action=validationCompte&mail=<?php echo $mail?>">
 								<input name="token" class="form-control" type="text" data-pattern="{6}" value="">
 								</br>

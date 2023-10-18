@@ -101,4 +101,17 @@ $bytes = openssl_random_pseudo_bytes($numbytes);
 return $hex;
   
 }
+
+function no_accent($imageName)
+      {
+       
+          $int_how_match = strlen($imageName);
+          $str_return = "";
+       
+          for($i=0; $i < $int_how_match; $i++ ){
+              $str_return = $str_return.substr(str_replace("&","",htmlentities(substr($imageName, $i ,1))),0,1);
+          }
+       
+          return $str_return;
+      }
 ?>

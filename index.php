@@ -2,6 +2,8 @@
 <?php
 require_once("include/fct.inc.php");
 require_once ("include/class.pdogsb.inc.php");
+require_once ("include/class.mail.php");
+$mail =  new Mail();
 session_start();
 
 
@@ -12,6 +14,15 @@ date_default_timezone_set('Europe/Paris');
 
 $pdo = PdoGsb::getPdoGsb();
 $estConnecte = estConnecte();
+$pdo = PdoGsb::$monPdo;
+    $sql=$pdo->prepare("SELECT etat FROM maintenance");
+    $sql->execute();
+    $med=$sql->fetch();
+
+if ($med['etat']==1){
+	include("vues/v_gel.php");
+}
+else{
 if(!isset($_GET['uc'])){
      $_GET['uc'] = 'connexion';
 }
@@ -45,6 +56,18 @@ switch($uc){
 	case 'code':{
 		include("controleurs/c_code.php");break;
 	}
+	case 'validateur':{
+		include("controleurs/c_validateur.php");break;
+	}
+	case 'cdp':{
+		include("controleurs/c_cdp.php");break;
+	}
+	case 'medecin':{
+		include("controleurs/c_medecin.php");break;
+	}
+	case 'admin':{
+		include("controleurs/c_admin.php");break;
+	}
 	
         
 	
@@ -52,7 +75,7 @@ switch($uc){
 require_once ("vues/v_footer.php");
 	
 
-
+}
 ?>
 
 
