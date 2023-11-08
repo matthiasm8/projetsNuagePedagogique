@@ -14,14 +14,14 @@ switch($action){
 	case 'validationCompte':{
 	
     $token = strip_tags($_POST['token']);
-    $pdo->valideUser($token,$email);
+    if($pdo->valideUser($token,$email)){
 	$infosMedecin = $pdo->donneLeMedecinByMail($email);
 				$id = $infosMedecin['id'];
 				$nom =  $infosMedecin['nom'];
 				$prenom = $infosMedecin['prenom'];
 				$role = $infosMedecin['id_role'];
 	$mail->envoiMailValidateur($prenom,$nom);
-	echo "<script>window.location.href=\"index.php\";</script>";
+	echo "<script>window.location.href=\"index.php\";</script>";}
     }
 }
 

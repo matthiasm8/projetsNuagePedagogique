@@ -105,16 +105,13 @@ switch($action){
         if($rempli && $loginOk && $passwordOk){
                 $lePassword = password_hash($lePassword, PASSWORD_DEFAULT);
                 $token=generateCode();
-                /* echo 'tout est ok, nous allons pouvoir créer votre compte...<br/>';*/
                 $executionOK = $pdo->creeMedecin($leLogin, $lePassword, $prenom, $nom, $telephone, $naiss, $rpps, $diplome,$token);       
                
                 if ($executionOK==true){
-                    /* echo "c'est bon, votre compte a bien été créé ;-)";*/
-                    // $pdo->connexionInitiale($leLogin);
                     
                     $mail->envoiMail($token,$leLogin);
                     echo "<script>alert('Un mail de confirmation vous a été envoyé par mail.');
-    window.location.href=\"index.php?uc=validation&action=demandeValidation&mail=$lelogin\"</script>" ;
+                          window.location.href=\"index.php?uc=validation&action=demandeValidation&mail=$leLogin\"</script>" ;
                     
                 }   
                 else

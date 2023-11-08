@@ -11,4 +11,5 @@
   
 <footer>
     <a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php?uc=droits&action=footer" target="_blank">La protection de vos données personnelles</a>
+    <a href="index.php?uc=droits&action=index">Droit de portabilité et Droit à l'oubli</a>
 </footer>

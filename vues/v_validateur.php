@@ -26,9 +26,9 @@
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-      
-      <table id="myTable" class="table table-hover">
-                   <caption><center>Vous avez <?php echo $nbMed?> utilisateurs à valider</center></caption>
+      <div class="container text-center">
+        <h3> Vous avez <?php echo $nbMed?> utilisateurs à valider</h3>
+      <table id="myTable" class="table table-striped table-dark">
                    <thead> <!-- En-tête du tableau -->
                        <tr id="tr" class="tr bg-success text-white" >
                            <th onclick="sortTable(1)" scope="col" >Nom</th>
@@ -38,7 +38,7 @@
                            <th onclick="sortTable(2)" scope="col" >N° Téléphone</th>                           
                            <th onclick="sortTable(4)" scope="col">RPPS</th>
                            <th onclick="sortTable(5)" scope="col">Date diplôme</th>
-                           <th onclick="sortTable(5)" scope="col">Accepter / Refuser</th>
+                           <th onclick="sortTable(5)" scope="col">Valider</th>
                         </tr>
                    </thead>
                    <tbody> 
@@ -65,17 +65,13 @@
                            <td><?php echo $tel ?></td>
                            <td><?php echo $rpps ?></td>
                            <td><?php echo $dateDip ?></td>
-                           <td><a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php?uc=validateur&action=AccepteMedecin&id=<?php echo $id ?>"style="color:#0000FF;">Accepter</a>  / <a href="suppression_article.php?id=<?php echo $id ?>" onclick="return confirm('Voulez vous vraiment refuser ce médecin ?');"style="color:#FF0000;">Refuser</a> </td>
+                           <td><a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php?uc=validateur&action=AccepteMedecin&id=<?php echo $id ?>">Valider l'inscription</a></td>
                            
                        </tr>
                        <?php endwhile;?>
                    </tbody>
           </table>
 
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
+                   </div>
   </body>
 </html>

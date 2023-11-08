@@ -14,15 +14,11 @@ date_default_timezone_set('Europe/Paris');
 
 $pdo = PdoGsb::getPdoGsb();
 $estConnecte = estConnecte();
-$pdo = PdoGsb::$monPdo;
-    $sql=$pdo->prepare("SELECT etat FROM maintenance");
+$db = PdoGsb::$monPdo;
+    $sql=$db->prepare("SELECT etat FROM maintenance");
     $sql->execute();
     $med=$sql->fetch();
 
-if ($med['etat']==1){
-	include("vues/v_gel.php");
-}
-else{
 if(!isset($_GET['uc'])){
      $_GET['uc'] = 'connexion';
 }
@@ -68,14 +64,24 @@ switch($uc){
 	case 'admin':{
 		include("controleurs/c_admin.php");break;
 	}
+	case 'produits':{
+		include("controleurs/c_produits.php");break;
+	}
+	case 'visios':{
+		include("controleurs/c_visios.php");break;
+	}
+	case 'moderateur':{
+		include("controleurs/c_moderateur.php");break;
+	}
 	
         
 	
 	}
+
 require_once ("vues/v_footer.php");
 	
 
-}
+
 ?>
 
 

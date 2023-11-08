@@ -1,14 +1,20 @@
 <?php 
 
 if(!isset($_GET['action'])){
-	$_GET['action'] = 'portabilite';
+	$_GET['action'] = 'index';
 }
 $action = $_GET['action'];
 switch($action){
 	
-    case 'consulter':{
+    case 'footer':{
+        include("vues/v_sommaire.php");
+		include("vues/v_politiqueprotectiondonnees.php");
+    }
+
+    case 'index':{
+        include("vues/v_sommaire.php");
 		include("vues/v_droits.php");
-		$id=$_SESSION['id'];
+        $id=$_SESSION['id'];
         $lesdonnes = $pdo->donneinfosmedecin($_SESSION['id']);
         $lesdonnestableau = array (
             "nom" => $lesdonnes["nom"],
@@ -23,9 +29,22 @@ switch($action){
 		break;
     }
 
-    case 'footer':{
-        include("vues/v_sommaire.php");
-		include("vues/v_politiqueprotectiondonnees.php");
+    case 'supprimer':{
+        $id=$_SESSION['id'];
+        $archivage=0;
+        $pdo->SupprimeDonnees($id,$archivage);
+            
+            session_destroy();echo '<script>alert("Au revoir ma belle !");window.location.href=\"index.php\";</script>';
+        
+    }
+
+    case 'archiver':{
+        $id=$_SESSION['id'];
+        $archivage=1;
+        $pdo->SupprimeDonnees($id,$archivage);
+            
+            session_destroy();echo '<script>alert("Au revoir ma belle !");window.location.href=\"index.php\";</script>';
+        
     }
 }
 

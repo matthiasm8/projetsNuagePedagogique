@@ -7,6 +7,16 @@ body {
   padding: 0px;
 }
 
+a{
+   color:#ffffff;
+   border-radius:5px;
+}
+
+a:hover{
+   color:#b4b3b3;
+   border-radius:5px;
+}
+
 .page-content > .row {
   margin-left: 0px !important;
   margin-right: 0px !important;
@@ -22,7 +32,7 @@ footer{
    line-height:25px;
    padding:10px 0px 10px 0px;
    bottom: 0px;
-   position:fixed;
+   position:absolute;
    width: 100%;
 }
 

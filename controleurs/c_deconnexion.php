@@ -11,5 +11,5 @@ switch($action){
         $id=$_SESSION['id'];
         $pdo->ajouteDeconnexion($id);
         session_destroy();
-        header("Location: index.php");
+        header("Location: https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php");
 }

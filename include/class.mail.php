@@ -8,7 +8,7 @@ require_once 'phpmailer/src/SMTP.php';
 
 class Mail{
     
-/* Fonction qui envoie un token de vérification de 6 caractères à l'adresse mail indiquée. */
+/* Fonction qui envoie un token de vérification de 6 caractères à l'adresse mail reçue en paramètre. */
 
 function envoiMail($token,$lelogin){
     $mail = new PHPMailer(true);
@@ -19,21 +19,17 @@ function envoiMail($token,$lelogin){
 
     $mail->setFrom('balavoinedev@gmail.com');
 
-    $mail->addAddress($_POST['login']);
-    // $mail->addAddress('matthias.muyl@gmail.com');
+    $mail->addAddress($lelogin);
  
-    $mail->Subject = "Confirmez votre inscription à GSB Extranet";
+    $mail->Subject = "Token de validation GSB Extranet";
 
-    // $mail->Body = file_get_contents("templatemail.php");
-
-    $mail->Body ='<a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php?uc=validation&action=demandeValidation&mail='.$lelogin.'" target="_blank">ici</a>'.$token.'';
+    $mail->Body = $token;
 
     $mail->send();
-    // header('Location: index.php?uc=validation&action=demandeValidation&mail='.$lelogin.'');
 
 }
 
-
+/* Fonction qui envoie un mail au validateur lui indiquant qu'un compte dont l'identité est reçue en paramètre doit être validé. */
 
 function envoiMailValidateur($prenom,$nom){
     
@@ -53,16 +49,14 @@ function envoiMailValidateur($prenom,$nom){
 
     $mail->setFrom('balavoinedev@gmail.com');
     
-    /*$mail->addAddress($_POST['login']);*/
     $mail->addAddress('matthias.muyl@gmail.com');
  
     $mail->Subject = "Nouveau compte à valider sur GSB.";
-    
-    // $mail->Body = file_get_contents("templatemail.php");
 
     $mail->Body ='Un nouveau médecin souhaite s\'inscrire sur GSB : <br>'.$prenom.' '.$nom.'<br><a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php" target="_blank">Valider le médecin</a>';
 
     $mail->send();
 }
+
 
 }

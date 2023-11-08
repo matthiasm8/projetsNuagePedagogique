@@ -1,4 +1,8 @@
 <?php
+if(($_SESSION['role']!=4)&&($_SESSION['role']!=3)){
+	
+    echo "<script>alert('Accès non autorisé. Vous avez été déconnecté.');window.location.href=\"index.php\";</script>";
+}
 
 if(!isset($_GET['action'])){
 	$_GET['action'] = 'indexValidateur';

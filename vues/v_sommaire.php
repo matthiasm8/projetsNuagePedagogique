@@ -38,29 +38,15 @@ else {
 ?>
 ﻿<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
-    <title>GSB -extranet</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="assets/profilcss/profil.css" rel="stylesheet">
-    <!-- styles -->
-    <link href="css/styles.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body background="assets/img/laboratoire.jpg">
-<nav class="navbar navbar-default">
+<head>
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-primary">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -70,26 +56,46 @@ else {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Galaxy Swiss Bourdin</a>
+      <a class="navbar-brand" href="index.php?uc=<?php echo $uc?>"><img src="./assets/img/LOGO-GSB.png" alt="Bootstrap" width="90" height="50"></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        
-        <!-- <li class="active"><a href="index.php?uc=etatFrais&action=selectionnerMois">M'inscrire à une visio</a></li>  -->
-        <li class="active"><a href="index.php?uc=droits&action=consulter">Droit de portabilité</a></li>
-        <?php if($role=='Validateur'){echo '<li class="active"><a href="index.php?uc=validateur&action=indexValidateur">Valider des médecins</a></li>';}?>
-        <?php if($role=='Médecin'){echo '<li class="active"><a href="index.php?uc=medecin&action=inscrirevisio">M\'inscrire à une visio</a></li>
-                                        <li class="active"><a href="index.php?uc=medecin&action=accesProduit">Liste des Produits</a></li>
-                                        <li class="active"><a href="index.php?uc=medecin&action=mesvisio">Mes visios</a></li> ';}?>
-       
-         
+      <?php if (($_SESSION['role']!=4)&&($_SESSION['role']!=1))  {?>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Produits
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="index.php?uc=produits&action=listeproduits">Liste des Produits</a></li>
+            <?php if($role=='Chef de produit'){echo '<li><a class="dropdown-item" href="index.php?uc=cdp&action=ajoutproduit"> Ajouter un produit</a></li>';}?>
+          </ul>
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Visios
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="index.php?uc=visios&action=listevisios">Liste des Visios</a></li>
+            <?php if($role=='Chef de produit'){echo '<li><a class="dropdown-item" href="index.php?uc=cdp&action=ajoutvisio"> Ajouter une visio</a></li>';}?>
+            <?php if($role=='Médecin'){echo '<li><a class="dropdown-item" href="index.php?uc=medecin&action=mesvisio"> Mes visioconférences</a></li>';}?>
+          </ul>
+      </li>
+      <?php }?>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php echo $role?>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="index.php?uc=<?php echo $uc?>">Accueil <?php echo $role?></a></li>
+          </ul>
+      </li>
       </ul>
+
       <ul class="nav navbar-nav navbar-right">
-      
-		  <li><a><?php echo $_SESSION['prenom']."  ".$_SESSION['nom']?></a></li>
-		  <li><a href="index.php?uc=<?php echo $uc?>">Portail <?php echo $role?></a></li>
+      <span class="navbar-text"><?php echo $_SESSION['prenom']."  ".$_SESSION['nom']?></span>
+      <!-- <li><a href="index.php?uc=<?php echo $uc?>">Portail <?php echo $role?></a></li> -->
       <li><a href="index.php?uc=deconnexion&action=deconnexion">Se déconnecter</a></li>
        
      </ul>

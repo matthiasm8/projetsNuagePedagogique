@@ -49,6 +49,7 @@ else
                            <th scope="col" >information</th>
                            <th scope="col" >Effet Indésirable</th>
                            <th scope="col" >Image</th>
+                           <th scope="col" >Actions</th>
                         
                         </tr>
                    </thead>
@@ -59,7 +60,8 @@ else
                          $objectif=$row['objectif'];
                          $info=$row['information'];
                          $effet=$row['effetIndesirable'];
-                         
+                         $img=$row['image'];
+                         $id=$row['id'];
 
                         //  if (isset($_SESSION['username'])){$username=$_SESSION['username'];}
                    ?>
@@ -69,7 +71,8 @@ else
                            <td><?php echo $objectif ?></td>
                            <td><?php echo $info ?></td>
                            <td><?php echo $effet ?></td>
-                            
+                           <td><?php if (!empty($row['image'])){?><img src="./images_produits/<?php echo $img?>"  height="80px"><?php } else {?> <img src="./images_produits/default.png"  height="80px"> <?php }?></td>
+                           <?php if($_SESSION['role']==2){?> <td><a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php?uc=cdp&action=modifieproduit&id=<?php echo $id ?>"style="color:#0000FF;">Modifier</a><br><a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php?uc=cdp&action=supprimeproduit&id=<?php echo $id ?>"style="color:red;">Supprimer</a></td><?php }?>
                            
                        </tr>
                        <?php endwhile;?>

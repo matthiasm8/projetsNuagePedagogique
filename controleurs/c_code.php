@@ -15,14 +15,27 @@ switch($action){
 		$token = $_POST['token'];
 		$login =$_SESSION['mail'];
 		if($pdo->valideCode($token,$login)){
+
+				// On récupère et stocke les informations du médecin
 				$infosMedecin = $pdo->donneLeMedecinByMail($login);
 				$id = $infosMedecin['id'];
 				$nom =  $infosMedecin['nom'];
 				$prenom = $infosMedecin['prenom'];
+				$role = $infosMedecin['id_role'];
+				$_SESSION['mail'] = $infosMedecin['mail'];
+				$_SESSION['role']=$role;
+				$_SESSION['nom']=$nom;
+				$_SESSION['prenom']=$prenom;
+				$_SESSION['id']=$id;
+
 				connecter($id,$nom,$prenom);
 				$pdo->ajouteConnexionInitiale($id);
 				
-						   
+				// Vérifie si le site est en maintenance 
+				if (($med['etat']==1)&&($_SESSION['role']!=3)){
+					include("vues/v_gel.php");
+				}else{	
+
 				include("vues/v_sommaire.php");
 				switch($_SESSION['role']){
 					case 5:{
@@ -45,7 +58,7 @@ switch($action){
 						include("vues/v_moderateur.php");
 						break;
 					}            
-				}
+				}}
 		}
     }
 }

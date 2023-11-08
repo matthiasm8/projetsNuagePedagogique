@@ -5,129 +5,94 @@ else
 ?>
 ﻿<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
-    <title>GSB -extranet</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="assets/profilcss/profil.css" rel="stylesheet">
-    <!-- styles -->
-    <link href="css/styles.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+<head>
+     <title>Mes visioconférences - GSB extranet</title>
   </head>
   <body background="assets/img/laboratoire.jpg">
 
 
-
-<nav class="navbar navbar-default">
-    <?php
+    
+  <?php
          $pdo = PdoGsb::$monPdo;
-         $sql=$pdo->prepare("SELECT * FROM visioconference WHERE dateVisio > now()");
+         $sql=$pdo->prepare("SELECT v.dateVisio,v.nomVisio,v.objectif,v.url,avismedecin,dateInscription,v.id FROM `medecinvisio` INNER JOIN visioconference v ON medecinvisio.idVisio=v.id WHERE v.dateVisio > now() && idMedecin=:id;");
+         $bv1 = $sql->bindValue(':id', $_SESSION['id']);
          $sql->execute();
          
-     
-        ?>
-    <h1> Tableau a embellir (bootstrap card par exemple)</h1>
-    <table id="myTable" class="table table-hover">
-                   <caption><center>A venir</center></caption>
-                   <thead> <!-- En-tête du tableau -->
-                       <tr id="tr" class="tr bg-success text-white" >
-                           <th onclick="sortTable(1)" scope="col" >Nom de la visio</th>
-                           <th onclick="sortTable(2)" scope="col" >Objetif</th>
-                           <th onclick="sortTable(3)" scope="col" >URL</th>
-                           <th onclick="sortTable(1)" scope="col" >Date de la visio</th>
+         $sql2=$pdo->prepare("SELECT v.dateVisio,v.nomVisio,v.objectif,v.url,avismedecin,dateInscription,v.id FROM `medecinvisio` INNER JOIN visioconference v ON medecinvisio.idVisio=v.id WHERE v.dateVisio <  now() && idMedecin=:id;");
+         $bv = $sql2->bindValue(':id', $_SESSION['id']);
+         $sql2->execute();
 
-                        </tr>
-                   </thead>
-                   <tbody> 
-                   <?php 
-                   while($row = $sql->fetch(PDO::FETCH_ASSOC)) :
-                         $nom=$row['nomVisio'];
+    ?>
+
+<?php
+if (!$_SESSION['id']) {
+    header('Location: ../index.php');
+} else {
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Mes visioconférences - GSB extranet</title>
+    <!-- Inclure les fichiers CSS de Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body background="assets/img/laboratoire.jpg">
+
+<div class="container-large">    
+    <div class="row justify-content-left">
+            <div class="col-md-3"><h3>Mes visios à venir</h3>
+            <?php while ($row = $sql->fetch(PDO::FETCH_ASSOC)) : 
+                        $nom=$row['nomVisio'];
                          $objectif=$row['objectif'];
                          $url=$row['url'];
                          $date=$row['dateVisio'];
+            ?>  <br>
+                <div class="card bg-transparent" >
+                    <iframe height="200" src="<?php echo $url;?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+                    <div class="card-body bg-primary">
+                        <h5 class="card-title fw-bold"><?php echo $nom;?></h5>
+                        <p class="card-text"><?php echo $objectif;?></p>
+                    </div>
+                    <div class="card-body bg-primary">
+                        <h5 class="card-title fw-bold">Prévue pour le <?php echo $date;?></h5>
+                    </div>
+                </div><?php endwhile; ?><br><br><br>
+            </div>
 
 
+    
+    
+            <div class="col-md-3"><h3>Mes visios passées</h3>
+            <?php while ($row = $sql2->fetch(PDO::FETCH_ASSOC)) : 
+            $nom=$row['nomVisio'];
+            $objectif=$row['objectif'];
+            $url=$row['url'];
+            $date=$row['dateVisio'];
+            $avis=$row['avismedecin'];
+            $id=$row['id'];
+        ?>      <br>
+                <div class="card bg-transparent" >
+                    <iframe height="200" src="<?php echo $url;?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-                        //  if (isset($_SESSION['username'])){$username=$_SESSION['username'];}
-                   ?>
-                    <!-- Corps du tableau -->
-                       <tr>
-                           <td><?php echo $nom ?></td>
-                           <td><?php echo $objectif ?></td>
-                           <td><?php echo $url ?></td>
-                           <td><?php echo $date ?></td>
-
-
-                           
-                       </tr>
-                       <?php endwhile;?>
-                   </tbody>
-          </table>
-
-          <?php
-         $pdo = PdoGsb::$monPdo;
-         $sql=$pdo->prepare("SELECT * FROM visioconference WHERE dateVisio < now()");
-         $sql->execute();
-         
-     
-        ?>
-
-    <table id="myTable" class="table table-hover">
-                   <caption><center>Passées</center></caption>
-                   <thead> <!-- En-tête du tableau -->
-                       <tr id="tr" class="tr bg-success text-white" >
-                           <th onclick="sortTable(1)" scope="col" >Nom de la visio</th>
-                           <th onclick="sortTable(2)" scope="col" >Objetif</th>
-                           <th onclick="sortTable(3)" scope="col" >URL</th>
-                           <th onclick="sortTable(1)" scope="col" >Date de la visio</th>
-
-                        </tr>
-                   </thead>
-                   <tbody> 
-                   <?php 
-                   while($row = $sql->fetch(PDO::FETCH_ASSOC)) :
-                         $nom=$row['nomVisio'];
-                         $objectif=$row['objectif'];
-                         $url=$row['url'];
-                         $date=$row['dateVisio'];
-                         $id=$row['id'];
-
-
-
-                        //  if (isset($_SESSION['username'])){$username=$_SESSION['username'];}
-                   ?>
-                    <!-- Corps du tableau -->
-                       <tr>
-                           <td><?php echo $nom ?></td>
-                           <td><?php echo $objectif ?></td>
-                           <td><?php echo $url ?></td>
-                           <td><?php echo $date ?></td>
-                           <td><a href="https://s5-4573.nuage-peda.fr/projet/gsbextranetB3/index.php?uc=medecin&action=DonneAvis&id=<?php echo $id ?>">Donne ton avis</a></td>
-
-                           
-                       </tr>
-                       <?php endwhile;?>
-                   </tbody>
-          </table>
-  </div><!-- /.container-fluid -->
-</nav>
-
-
-
-	
-	<div class="page-content">
-    	<div class="row">
-
-<?php ;?>
+                <div class="card-body bg-primary">
+                    <h5 class="card-title fw-bold"><?php echo $nom;?></h5>
+                    <p class="card-text"><?php echo $objectif;?></p>
+                </div>
+                <div class="card-body bg-primary">
+                  <h5 class="card-title fw-bold">S'est déroulée le <?php echo $date;?></h5>
+                    <h5 class="card-title fw-bold"><?php if (!empty($avis)){echo 'Votre avis : '.$avis;}else echo '<form action="index.php?uc=medecin&action=donneavis&id='.$id.'" method="post" enctype="multipart/form-data" id="form">
+                                    <input type="text" name="avis" placeholder="Votre commentaire.." required ></input>
+                                    <button type="submit">Poster un avis</button>
+                            </form>';?></h5>
+                    
+                </div>
+            </div>
+        <?php endwhile; ?>
+    </div>
+</div>
+</body>
+</html>
+<?php
+}
+?>

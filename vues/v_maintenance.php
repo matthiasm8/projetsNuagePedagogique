@@ -1,19 +1,8 @@
+<?php $bouton='Activer la maintenance';if ($med['etat']==1){$bouton='Arrêter la maintenance';}?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>GSB - extranet</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- styles -->
-    <link href="css/styles.css" rel="stylesheet">
-    
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+    <title>Programmer une maintenance - GSB extranet</title>
   </head>
 
   <body background="assets/img/laboratoire.jpg">
@@ -28,14 +17,14 @@
 			<div class="login-wrapper">
 				<div class="box">
 					<div class="content-wrap">
-						<legend>Programmer une maintenance</legend>
+						<legend>Maintenance du site</legend>
 							<form method="post" action="index.php?uc=admin&action=validemaintenance">
-                                <!-- <label for="date">Date de la maintenance :</label>
-								<input name="date" class="form-control" type="date" value="" required ></br>
-                                <label for="heure">Heure de la maintenance :</label>
-                                <input type="time" name="heure" required /></br>
+                                <!-- <label for="date">Date de la maintenance : <br>(A venir dans la mise à jour d'octobre)</label>
+								<input name="date" class="form-control" type="date" value="" readonly ></br>
+                                <label for="heure">Heure de la maintenance : <br>(A venir dans la mise à jour d'octobre)</label>
+                                <input type="time" name="heure" readonly /></br>
 								</br> -->
-								<input type="submit" class="btn btn-primary signup" value="Planifier">
+								<input type="submit" class="btn btn-primary signup" value="<?php echo $bouton;?>" onclick="return confirm('Veuillez confirmer cette action');">
 							</form>
 							</br>
                                                 

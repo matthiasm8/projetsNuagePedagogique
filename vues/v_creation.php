@@ -1,19 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>GSB -extranet</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- styles -->
-    <link href="css/styles.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+    <title>Inscription - GSB extranet</title>
   </head>
 
   <body background="assets/img/laboratoire.jpg">
@@ -28,23 +16,23 @@
 						<legend>je suis médecin, je souhaite créer un compte</legend>
 							<form method="post" action="index.php?uc=creation&action=valideCreation">
               <input name="login" class="form-control" type="email" placeholder="Adresse Mail"/>
-							                                              <br><input name="mdp" class="form-control" type="password" placeholder="Mot de Passe"/>
+							                                              <br><input name="mdp" class="form-control" type="password" required pattern='#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W){12,}#' placeholder="Mot de Passe"/>
                                                             
                                                               <div class="col">
-                                                            <input name="prenom" class="form-control" type="text" placeholder="Prénom" required/>
-                                                            <input name="nom" class="form-control" type="text" placeholder="Nom" required/>
+                                                            <input name="prenom" class="form-control" type="text" placeholder="Prénom" pattern="\w{1,30}" required/>
+                                                            <input name="nom" class="form-control" type="text" placeholder="Nom" pattern="\w{1,30}" required/>
                                                               </div>  
                                                           
-                                                            <input name="telephone" class="form-control" type="int" placeholder="N° de téléphone" required/>
+                                                            <input name="telephone" class="form-control" type="int" placeholder="N° de téléphone" pattern="[0]{1}[0-9]{9}" required/>
                                                               <label for='datenaiss'>Date de Naissance :</label>
                                                             <input name="datenaiss" class="form-control" type="date" placeholder="date de naissance" required/>
-                                                            <br><input name="rpps" class="form-control" type="int" placeholder="Numéro RPPS" maxlength="15" required/>
+                                                            <br><input name="rpps" class="form-control" type="int" placeholder="Numéro RPPS" pattern="\d{10}" required/>
                                                             <br><label for='datediplome'>Date d'obtention du diplôme :</label><input name="datediplome" class="form-control" type="date" placeholder="date diplôme" required/>    
                 <div class="form-check">
                   <input type='hidden' value='0' name='checkbox'>
                   <input class="form-check-input"type='checkbox' value='1' id="flexCheckDefault" name="checkbox" required>
                     <label class="form-check-label" for="flexCheckDefault" >
-                    J'atteste avoir lu et accepte notre <a href="vues/v_politiqueprotectiondonnees.html" target="_blank">politique de protection des données</a>
+                    J'atteste avoir lu et accepte notre <a href="vues/v_politiqueprotectiondonnees.php" style="color:blue;"target="_blank">politique de protection des données</a>
                     </label>
                 </div>
                 </br>

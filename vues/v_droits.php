@@ -2,25 +2,19 @@
 <html lang="fr">
 <?php require_once ("vues/v_sommaire.php");?>
 <head>
-    <title>GSB -extranet</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- styles -->
-    <link href="css/styles.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-  </head>
+    <title>Mes données - GSB extranet</title>
+</head>
 
   <body background="assets/img/laboratoire.jpg">
 
 <div class="page-content container">
-  Vous pouvez télécharger vos données en cliquant <a href="portabilite/<?php echo $_SESSION['id']?>.json" download>ici</a>
+  <h2>Droit de portabilité :</h2>
+  <h4>Vous pouvez télécharger vos données en cliquant <a href="portabilite/<?php echo $_SESSION['id']?>.json" download>ici</a><br><br>
+  <h2>Droit à l'oubli :</h2> 
+      <h4>Je souhaite désactiver mon compte (ce compte sera irrécupérable !) :
+        <br><a onclick="return confirm('Voulez vous vraiment supprimer votre compte ? \n Cette action est irréversible !');" href="index.php?uc=droits&action=supprimer" >Supprimer mon compte ainsi que toutes mes données</a>
+        <br><a onclick="return confirm('Voulez vous vraiment supprimer votre compte ? \n Cette action est irréversible !');" href="index.php?uc=droits&action=archiver" >Supprimer mon compte et autoriser GSB à archiver mes données à des fins statistiques</a>
+  </h4>
 </div>
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
